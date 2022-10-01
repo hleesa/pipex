@@ -13,4 +13,25 @@
 #ifndef PIPEX_H
 #define PIPEX_H
 
-#endif //_PIPEX_H
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include "ft_printf/ft_printf.h"
+
+enum e_pipe_fds
+{
+	READER_FD = 0,
+	WRITER_FD = 1,
+};
+
+
+
+
+
+
+
+#include <string.h>
+
+#endif //PIPEX_H
