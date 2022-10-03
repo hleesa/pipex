@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-
 int main()
 {
 	int pipe_fds[2];
@@ -26,6 +25,26 @@ int main()
 		perror("pipe()");
 		return -1;
 	}
+
+	/*
+	 *
+	 */
+
+	char cmd[] = "/bin/ls";
+
+	char *argVec[] = {"ls", "-l",NULL};
+	char *envVec[] = {NULL};
+
+	printf("Start of execve call %s:\n", cmd);
+	printf("====================================================\n");
+	if (execve(cmd, argVec, envVec) == -1) {
+		perror("Could not execute execve");
+	}
+	printf("Oops, something went wrong!");
+
+	return 0;
+
+
 
 	pid = fork();
 	if (pid == 0) {
@@ -46,8 +65,8 @@ int main()
 
 		strncpy(buf, "hello child~", sizeof (buf) - 1);
 		write(pipe_fds[WRITER_FD], buf, strlen(buf));
-
-		close(pipe_fds[READER_FD]);
+		printf("[%d] parent send\n", getpid());
+		close(pipe_fds[WRITER_FD]);
 
 		pid = wait(&wstatus);
 
