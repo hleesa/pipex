@@ -11,7 +11,18 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-int main()
+
+char	*ft_get_env(const char *name, char **env)
+{
+	while (*env)
+	{
+		if (ft_strncmp(name, *env, ft_strlen(name)) == 0)
+			return (*(env) + ft_strlen(name) + 1);
+		++env;
+	}
+	return (NULL);
+}
+int main(int argc, char **argv, char **envp)
 {
 	int pipe_fds[2];
 	pid_t pid;
@@ -25,6 +36,31 @@ int main()
 		perror("pipe()");
 		return -1;
 	}
+
+	(void) argc;
+	(void) argv;
+//	char **env;
+//	env = envp;
+//	while (*env) {
+//		printf("%s\n", *env);
+//		++env;
+//	}
+	printf("=================================================================\n");
+	char *val = getenv("PATH");
+	if (val == NULL) {
+		printf("not defined\n");
+	} else {
+		printf("PATH = %s\n", val);
+	}
+	printf("=================================================================\n");
+
+	val = ft_get_env("PATH", envp);
+	if (val == NULL) {
+		printf("not defined\n");
+	} else {
+		printf("PATH = %s\n", val);
+	}
+	printf("=================================================================\n");
 
 	/*
 	 *
