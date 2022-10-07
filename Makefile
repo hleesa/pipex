@@ -20,6 +20,7 @@ RM			= rm -f
 
 SRCS = \
 	 main.c \
+	 env.c \
 
 OBJS = $(SRCS:c=o)
 

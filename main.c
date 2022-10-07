@@ -12,16 +12,7 @@
 
 #include "pipex.h"
 
-char	*ft_get_env(const char *name, char **env)
-{
-	while (*env)
-	{
-		if (ft_strncmp(name, *env, ft_strlen(name)) == 0)
-			return (*(env) + ft_strlen(name) + 1);
-		++env;
-	}
-	return (NULL);
-}
+
 int main(int argc, char **argv, char **envp)
 {
 	int pipe_fds[2];
@@ -37,46 +28,42 @@ int main(int argc, char **argv, char **envp)
 		return -1;
 	}
 
-	(void) argc;
-	(void) argv;
-//	char **env;
-//	env = envp;
-//	while (*env) {
-//		printf("%s\n", *env);
-//		++env;
-//	}
-	printf("=================================================================\n");
-	char *val = getenv("PATH");
-	if (val == NULL) {
-		printf("not defined\n");
-	} else {
-		printf("PATH = %s\n", val);
-	}
 	printf("=================================================================\n");
 
-	val = ft_get_env("PATH", envp);
-	if (val == NULL) {
-		printf("not defined\n");
-	} else {
-		printf("PATH = %s\n", val);
-	}
-	printf("=================================================================\n");
-
-	/*
-	 *
-	 */
-
-	char cmd[] = "/bin/ls";
+	char** file_list = get_file_list("PATH", envp, "ls");
 
 	char *argVec[] = {"ls", "-l",NULL};
-	char *envVec[] = {NULL};
-
-	printf("Start of execve call %s:\n", cmd);
-	printf("====================================================\n");
-	if (execve(cmd, argVec, envVec) == -1) {
-		perror("Could not execute execve");
+	int i = -1;
+	while (file_list[++i])
+	{
+		if (execve(file_list[i], argVec, NULL) == -1) {
+			perror("Could not execute execve");
+		}
+		printf("Oops, something went wrong!");
 	}
-	printf("Oops, something went wrong!");
+	printf("=================================================================\n");
+
+
+	(void) argc;
+	(void) argv;
+	(void) envp;
+//	char *file = "/bin/ls";
+
+
+//	char *envVec[] = {NULL};
+
+//	while(*argv)
+//	{
+//		printf("%s\n", *argv);
+//		++argv;
+//	}
+//
+//	printf("Start of execve call %s:\n", file);
+//	printf("====================================================\n");
+//	if (execve(file, argVec, NULL) == -1) {
+//		perror("Could not execute execve");
+//	}
+//	printf("Oops, something went wrong!");
 
 	return 0;
 

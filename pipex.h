@@ -26,6 +26,22 @@ enum e_pipe_fds
 	WRITER_FD = 1,
 };
 
+enum e_bool
+{
+	FALSE,
+	TRUE
+};
+
+typedef int t_bool;
+
+typedef struct s_arg_info
+{
+	char *infile;
+	char **cmd;
+	char *outfile;
+}	t_arg_info;
+
+char**	get_file_list(const char *name, char**env, char* file_name);
 
 
 
