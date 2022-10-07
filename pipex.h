@@ -26,6 +26,12 @@ enum e_pipe_fds
 	WRITER_FD = 1,
 };
 
+enum e_io_fd
+{
+	STDIN = 0,
+	STDOUT = 1,
+};
+
 enum e_bool
 {
 	FALSE,
@@ -37,12 +43,12 @@ typedef int t_bool;
 typedef struct s_arg_info
 {
 	char *infile;
-	char **cmd;
+	char ***cmd;
 	char *outfile;
 }	t_arg_info;
 
 char**	get_file_list(const char *name, char**env, char* file_name);
-
+int	lack_of_args(void);
 
 
 

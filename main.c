@@ -12,6 +12,14 @@
 
 #include "pipex.h"
 
+void	input_redirection(char *path, int *pipe_fds)
+{
+	const int fd = open(path, O_RDONLY);
+
+	dup2(fd, STDIN);
+	close(fd);
+	return ;
+}
 
 int main(int argc, char **argv, char **envp)
 {
@@ -19,6 +27,7 @@ int main(int argc, char **argv, char **envp)
 	pid_t pid;
 	char buf[1024];
 	int wstatus;
+
 
 	printf("[%d] start of function\n", getpid());
 	ft_memset(buf, 0, sizeof buf);
@@ -65,7 +74,6 @@ int main(int argc, char **argv, char **envp)
 //	}
 //	printf("Oops, something went wrong!");
 
-	return 0;
 
 
 

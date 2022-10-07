@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   is.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 12:34:50 by salee2            #+#    #+#             */
-/*   Updated: 2022/10/07 12:34:51 by salee2           ###   ########.fr       */
+/*   Created: 2022/10/07 17:35:44 by salee2            #+#    #+#             */
+/*   Updated: 2022/10/07 17:35:46 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	lack_of_args(void)
+t_bool	is_right_args(int argc)
 {
-	ft_printf("It must take 4 or more arguments\n");
-	return (-1);
+	return (argc >= 5);
 }
+
