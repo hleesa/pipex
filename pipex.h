@@ -26,12 +26,6 @@ enum e_pipe_fds
 	WRITER_FD = 1,
 };
 
-enum e_io_fd
-{
-	STDIN = 0,
-	STDOUT = 1,
-};
-
 enum e_bool
 {
 	FALSE,
