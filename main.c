@@ -57,6 +57,12 @@ int main(int argc, char **argv, char **envp)
 		wait(0);
 
 		close(pipe_fds[WRITER_FD]);
+		const int fd = open(argv[4], O_RDWR | O_CREAT, S_IRWXU);
+		if(dup2(fd, STDOUT_FILENO) == -1)
+		{
+			perror("dup2()");
+			exit(-1);
+		}
 		//read
 		dup2(pipe_fds[READER_FD], STDIN_FILENO);
 		char **arg_vec = ft_split(argv[3], ' ');
