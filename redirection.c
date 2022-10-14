@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 12:34:50 by salee2            #+#    #+#             */
-/*   Updated: 2022/10/07 12:34:51 by salee2           ###   ########.fr       */
+/*   Created: 2022/10/14 18:48:29 by salee2            #+#    #+#             */
+/*   Updated: 2022/10/14 18:48:30 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	lack_of_args(void)
+void	input_redirection(char *path)
 {
-	ft_printf("It must take 4 or more arguments\n");
-	return (-1);
+	const int fd = open(path, O_RDONLY);
+
+	if(dup2(fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2()");
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+	return ;
 }
 
-void printEnvp(char **envp)
+void	output_redirection(char *path)
 {
-	printf("envp begin:===========================\n");
-	int i=0;
-	while(envp[i])
+	const int fd = open(path, O_RDWR | O_CREAT, 0644);
+
+	if(dup2(fd, STDOUT_FILENO) == -1)
 	{
-		printf("%s\n", envp[i]);
-		++i;
+		perror("dup2()");
+		exit(EXIT_FAILURE);
 	}
-	printf("envp end:===========================\n");
+	return ;
 }

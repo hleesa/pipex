@@ -10,4 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "pipex.h"
+
+int	*make_pipe(void)
+{
+	int *pipe_fds = malloc(sizeof(int) * 2);
+
+	if (pipe(pipe_fds))
+	{
+		perror("pipe()");
+		exit(EXIT_FAILURE);
+	}
+	return pipe_fds;
+}
 

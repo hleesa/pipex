@@ -43,7 +43,10 @@ typedef struct s_arg_info
 
 char**	get_file_list(const char *name, char**env, char* file_name);
 int	lack_of_args(void);
-
+int	*make_pipe(void);
+void	input_redirection(char *path);
+void	output_redirection(char *path);
+void	run_execve(char* argv, char **envp);
 
 
 

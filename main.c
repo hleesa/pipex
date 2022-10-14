@@ -12,101 +12,37 @@
 
 #include "pipex.h"
 
-void	input_redirection(char *path)
-{
-	const int fd = open(path, O_RDONLY);
-
-	if(dup2(fd, STDIN_FILENO) == -1)
-	{
-		perror("dup2()");
-		exit(-1);
-	}
-	close(fd);
-	return ;
-}
-
-void printEnvp(char **envp)
-{
-	printf("envp begin:===========================\n");
-	int i=0;
-	while(envp[i])
-	{
-		printf("%s\n", envp[i]);
-		++i;
-	}
-	printf("envp end:===========================\n");
-}
-
 int main(int argc, char **argv, char **envp)
 {
-	int pipe_fds[2];
+	int *pipe_fds;
 	pid_t pid;
 
-	if (pipe(pipe_fds)) {
-		perror("pipe()");
-		return -1;
-	}
+	if (argc != 5)
+		return EXIT_FAILURE;
+	pipe_fds = make_pipe();
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork()");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)	// parent
 	{
 		wait(0);
-
 		close(pipe_fds[WRITER_FD]);
-		const int fd = open(argv[4], O_RDWR | O_CREAT, S_IRWXU);
-		if(dup2(fd, STDOUT_FILENO) == -1)
-		{
-			perror("dup2()");
-			exit(-1);
-		}
-		//read
+		output_redirection(argv[4]);
 		dup2(pipe_fds[READER_FD], STDIN_FILENO);
-		char **arg_vec = ft_split(argv[3], ' ');
-		char **file_list = get_file_list("PATH", envp, arg_vec[0]);
-		int i = -1;
-		while (file_list[++i])
-		{
-			if (access(file_list[i], F_OK) == 0)
-			{
-				if (execve(file_list[i], arg_vec, envp) == -1)
-				{
-					perror("Could not execute execve");
-				}
-			}
-		}
-
-		close(pipe_fds[WRITER_FD]);
+		run_execve(argv[3], envp);
+		close(pipe_fds[READER_FD]);
 	}
 	else	// child
 	{
-		// input redirection
 		close(pipe_fds[READER_FD]);
-		const int fd = open(argv[1], O_RDONLY);
-		if(dup2(fd, STDIN_FILENO) == -1)
-		{
-			perror("dup2()");
-			exit(-1);
-		}
-		close(fd);
-		//write
+		input_redirection(argv[1]);
 		dup2(pipe_fds[WRITER_FD], STDOUT_FILENO);
-		char **arg_vec = ft_split(argv[2], ' ');
-		char **file_list = get_file_list("PATH", envp, arg_vec[0]);
-		int i = 0;
-		while (file_list[++i])
-		{
-			if (access(file_list[i], F_OK) == 0)
-			{
-				if (execve(file_list[i], arg_vec, envp) == -1)
-					perror("Could not execute execve");
-			}
-		}
+		run_execve(argv[2], envp);
 		close(pipe_fds[WRITER_FD]);
 	}
-	(void) argc;
+	free(pipe_fds);
 	return 0;
 }
