@@ -47,7 +47,8 @@ int	*make_pipe(void);
 void	input_redirection(char *path);
 void	output_redirection(char *path);
 void	run_execve(char* argv, char **envp);
-
+void	exit_fork_error();
+void	exit_if_invalid_arg(int argc);
 
 
 

@@ -21,6 +21,7 @@ RM			= rm -f
 SRCS = \
 	 env.c \
 	 execve.c \
+	 exit.c \
 	 main.c \
 	 pipex.c \
 	 redirection.c \
