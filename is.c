@@ -14,6 +14,5 @@
 
 t_bool	is_right_args(int argc)
 {
-	return (argc >= 5);
+	return (argc == 5);
 }
-

@@ -23,19 +23,19 @@ char	*ft_get_env(const char *name, char **env)
 	return (NULL);
 }
 
-char** get_env_list(const char *name, char** env)
+char	**get_env_list(const char *name, char **env)
 {
-	return ft_split(ft_get_env(name, env), ':');
+	return (ft_split(ft_get_env(name, env), ':'));
 }
 
-char**	get_file_list(const char *name, char**env, char* file_name)
+char	**get_file_list(const char *name, char **env, char *file_name)
 {
-	int i;
-	char**	file_list;
+	int		i;
+	char	**file_list;
 
 	file_list = get_env_list(name, env);
 	i = -1;
-	while(file_list[++i])
+	while (file_list[++i])
 	{
 		file_list[i] = ft_strjoin(file_list[i], "/");
 		file_list[i] = ft_strjoin(file_list[i], file_name);

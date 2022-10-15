@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-void	exit_fork_error()
+void	exit_fork_error(void)
 {
 	perror("fork()");
 	exit(EXIT_FAILURE);
@@ -20,7 +20,7 @@ void	exit_fork_error()
 
 void	exit_if_invalid_arg(int argc)
 {
-	if (argc != 5)
+	if (!is_right_args(argc))
 	{
 		perror("invalid arg");
 		exit(EXIT_FAILURE);

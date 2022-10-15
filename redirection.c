@@ -14,9 +14,9 @@
 
 void	input_redirection(char *path)
 {
-	const int fd = open(path, O_RDONLY);
+	const int	fd = open(path, O_RDONLY);
 
-	if(dup2(fd, STDIN_FILENO) == -1)
+	if (dup2(fd, STDIN_FILENO) == -1)
 	{
 		perror("dup2()");
 		exit(EXIT_FAILURE);
@@ -27,9 +27,9 @@ void	input_redirection(char *path)
 
 void	output_redirection(char *path)
 {
-	const int fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	const int	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
 
-	if(dup2(fd, STDOUT_FILENO) == -1)
+	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("dup2()");
 		exit(EXIT_FAILURE);

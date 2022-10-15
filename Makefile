@@ -19,12 +19,14 @@ CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 
 SRCS = \
+	 dup.c \
 	 env.c \
-	 execve.c \
 	 exit.c \
+	 is.c \
 	 main.c \
 	 pipex.c \
 	 redirection.c \
+	 run.c \
 
 OBJS = $(SRCS:c=o)
 

@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   dup.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 12:34:50 by salee2            #+#    #+#             */
-/*   Updated: 2022/10/07 12:34:51 by salee2           ###   ########.fr       */
+/*   Created: 2022/10/15 15:52:10 by salee2            #+#    #+#             */
+/*   Updated: 2022/10/15 15:52:11 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	lack_of_args(void)
+void	dup_write_fd(int *pipe_fds)
 {
-	ft_printf("It must take 4 or more arguments\n");
-	return (-1);
+	close(pipe_fds[READER_FD]);
+	if (dup2(pipe_fds[WRITER_FD], STDOUT_FILENO) == -1)
+	{
+		perror("dup2()");
+		exit(EXIT_FAILURE);
+	}
+	close(pipe_fds[WRITER_FD]);
+	return ;
 }
 
-void printEnvp(char **envp)
+void	dup_read_fd(int *pipe_fds)
 {
-	printf("envp begin:===========================\n");
-	int i=0;
-	while(envp[i])
+	close(pipe_fds[WRITER_FD]);
+	if (dup2(pipe_fds[READER_FD], STDIN_FILENO) == -1)
 	{
-		printf("%s\n", envp[i]);
-		++i;
+		perror("dup2()");
+		exit(EXIT_FAILURE);
 	}
-	printf("envp end:===========================\n");
+	close(pipe_fds[READER_FD]);
+	return ;
 }

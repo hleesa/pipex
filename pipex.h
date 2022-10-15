@@ -11,14 +11,14 @@
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
-#define PIPEX_H
+# define PIPEX_H
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include "ft_printf/ft_printf.h"
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/wait.h>
+# include "ft_printf/ft_printf.h"
 
 enum e_pipe_fds
 {
@@ -32,26 +32,18 @@ enum e_bool
 	TRUE
 };
 
-typedef int t_bool;
+typedef int	t_bool;
 
-typedef struct s_arg_info
-{
-	char *infile;
-	char ***cmd;
-	char *outfile;
-}	t_arg_info;
-
-char**	get_file_list(const char *name, char**env, char* file_name);
-int	lack_of_args(void);
-int	*make_pipe(void);
+void	dup_write_fd(int *pipe_fds);
+void	dup_read_fd(int *pipe_fds);
+char	**get_file_list(const char *name, char **env, char *file_name);
+void	exit_fork_error(void);
+void	exit_if_invalid_arg(int argc);
+t_bool	is_right_args(int argc);
+int		*make_pipe(void);
 void	input_redirection(char *path);
 void	output_redirection(char *path);
-void	run_execve(char* argv, char **envp);
-void	exit_fork_error();
-void	exit_if_invalid_arg(int argc);
-
-
-
-#include <string.h>
+void	run_execve(char *argv, char **envp);
+void	run_cmd(pid_t pid, char **argv, char **envp);
 
 #endif //PIPEX_H
