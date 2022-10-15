@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 11:50:04 by salee2            #+#    #+#             */
-/*   Updated: 2022/10/15 11:50:05 by salee2           ###   ########.fr       */
+/*   Created: 2022/10/14 18:48:29 by salee2            #+#    #+#             */
+/*   Updated: 2022/10/14 18:48:30 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
-void	exit_fork_error(void)
+void	input_redirection(char *path)
 {
-	perror("fork()");
-	exit(EXIT_FAILURE);
+	const int	fd = open(path, O_RDONLY);
+
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2()");
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+	return ;
 }
 
-void	exit_if_invalid_arg(int argc)
+void	output_redirection(char *path)
 {
-	if (!is_right_args(argc))
+	const int	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+
+	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
-		perror("invalid arg");
+		perror("dup2()");
 		exit(EXIT_FAILURE);
 	}
 	return ;

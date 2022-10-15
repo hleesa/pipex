@@ -18,7 +18,7 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 
-SRCS = \
+MANDA_SRCS = \
 	 dup.c \
 	 env.c \
 	 exit.c \
@@ -28,13 +28,13 @@ SRCS = \
 	 redirection.c \
 	 run.c \
 
-OBJS = $(SRCS:c=o)
+MANDA_OBJS = $(addprefix mandatory/, $(MANDA_SRCS:c=o))
 
 all: $(NAME)
 
 bonus: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(MANDA_OBJS)
 	make -C $(PRINTFDIR)
 	$(CC) $(CFLAGS) -o $@ $^ $(PRINTFDIR)/$(PRINTFFILE)
 
@@ -43,7 +43,7 @@ $(NAME): $(OBJS)
 
 clean:
 	make -C $(PRINTFDIR) clean
-	$(RM) $(OBJS) $(MLXFILE) $(PRINTFFILE)
+	$(RM) $(MANDA_OBJS) $(MLXFILE) $(PRINTFFILE)
 
 fclean: clean
 	make -C $(PRINTFDIR) fclean

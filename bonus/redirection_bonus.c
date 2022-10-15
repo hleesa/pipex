@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   redirection_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/29 12:23:40 by salee2            #+#    #+#             */
-/*   Updated: 2022/09/29 12:23:42 by salee2           ###   ########.fr       */
+/*   Created: 2022/10/15 16:58:52 by salee2            #+#    #+#             */
+/*   Updated: 2022/10/15 16:58:54 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
-int	main(int argc, char **argv, char **envp)
+void	input_redirection(char *path)
 {
-	pid_t	pid;
+	const int	fd = open(path, O_RDONLY);
 
-	exit_if_invalid_arg(argc);
-	pid = fork();
-	if (pid < 0)
-		exit_fork_error();
-	else if (pid > 0)
-		wait(0);
-	else
-		run_cmd(pid, argv, envp);
-	return (0);
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2()");
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+	return ;
+}
+
+void	output_redirection(char *path)
+{
+	const int	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		perror("dup2()");
+		exit(EXIT_FAILURE);
+	}
+	return ;
 }

@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   exit_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/29 12:23:45 by salee2            #+#    #+#             */
-/*   Updated: 2022/09/29 12:23:47 by salee2           ###   ########.fr       */
+/*   Created: 2022/10/15 16:58:26 by salee2            #+#    #+#             */
+/*   Updated: 2022/10/15 16:58:28 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
-int	*make_pipe(void)
+void	exit_fork_error(void)
 {
-	int	*pipe_fds;
+	perror("fork()");
+	exit(EXIT_FAILURE);
+}
 
-	pipe_fds = malloc(sizeof(int) * 2);
-	if (pipe(pipe_fds))
+void	exit_if_invalid_arg(int argc)
+{
+	if (!is_right_args(argc))
 	{
-		perror("pipe()");
+		perror("invalid arg");
 		exit(EXIT_FAILURE);
 	}
-	return (pipe_fds);
+	return ;
 }

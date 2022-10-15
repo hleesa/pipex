@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dup.c                                              :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 15:52:10 by salee2            #+#    #+#             */
-/*   Updated: 2022/10/15 15:52:11 by salee2           ###   ########.fr       */
+/*   Created: 2022/09/29 12:23:45 by salee2            #+#    #+#             */
+/*   Updated: 2022/09/29 12:23:47 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
-void	dup_write_fd(int *pipe_fds)
+int	*make_pipe(void)
 {
-	close(pipe_fds[READER_FD]);
-	if (dup2(pipe_fds[WRITER_FD], STDOUT_FILENO) == -1)
+	int	*pipe_fds;
+
+	pipe_fds = malloc(sizeof(int) * 2);
+	if (pipe(pipe_fds))
 	{
-		perror("dup2()");
+		perror("pipe()");
 		exit(EXIT_FAILURE);
 	}
-	close(pipe_fds[WRITER_FD]);
-	return ;
-}
-
-void	dup_read_fd(int *pipe_fds)
-{
-	close(pipe_fds[WRITER_FD]);
-	if (dup2(pipe_fds[READER_FD], STDIN_FILENO) == -1)
-	{
-		perror("dup2()");
-		exit(EXIT_FAILURE);
-	}
-	close(pipe_fds[READER_FD]);
-	return ;
+	return (pipe_fds);
 }
