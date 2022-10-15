@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 NAME		= pipex
+BONUS		= pipex
 PRINTFDIR	= ./ft_printf
 PRINTFFILE	= libftprintf.a
 
@@ -28,13 +29,27 @@ MANDA_SRCS = \
 	 redirection.c \
 	 run.c \
 
+BONUS_SRCS = \
+	 dup_bonus.c\
+	 env_bonus.c \
+	 exit_bonus.c \
+	 is_bonus.c \
+	 main_bonus.c \
+	 pipex_bonus.c \
+	 redirection_bonus.c \
+	 run_bonus.c \
+
 MANDA_OBJS = $(addprefix mandatory/, $(MANDA_SRCS:c=o))
+BONUS_OBJS = $(addprefix bonus/, $(BONUS_SRCS:c=o))
 
 all: $(NAME)
-
-bonus: $(NAME)
+bonus: $(BONUS)
 
 $(NAME): $(MANDA_OBJS)
+	make -C $(PRINTFDIR)
+	$(CC) $(CFLAGS) -o $@ $^ $(PRINTFDIR)/$(PRINTFFILE)
+
+$(BONUS): $(BONUS_OBJS)
 	make -C $(PRINTFDIR)
 	$(CC) $(CFLAGS) -o $@ $^ $(PRINTFDIR)/$(PRINTFFILE)
 
@@ -43,7 +58,7 @@ $(NAME): $(MANDA_OBJS)
 
 clean:
 	make -C $(PRINTFDIR) clean
-	$(RM) $(MANDA_OBJS) $(MLXFILE) $(PRINTFFILE)
+	$(RM) $(MANDA_OBJS) $(BONUS_OBJS) $(MLXFILE) $(PRINTFFILE)
 
 fclean: clean
 	make -C $(PRINTFDIR) fclean
