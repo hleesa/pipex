@@ -17,6 +17,11 @@ int	*make_pipe(void)
 	int	*pipe_fds;
 
 	pipe_fds = malloc(sizeof(int) * 2);
+	if (pipe_fds == NULL)
+	{
+		perror("malloc()");
+		exit(EXIT_FAILURE);
+	}
 	if (pipe(pipe_fds))
 	{
 		perror("pipe()");

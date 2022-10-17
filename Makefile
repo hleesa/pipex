@@ -11,7 +11,6 @@
 # **************************************************************************** #
 
 NAME		= pipex
-BONUS		= pipex
 PRINTFDIR	= ./ft_printf
 PRINTFFILE	= libftprintf.a
 
@@ -20,45 +19,52 @@ CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 
 MANDA_SRCS = \
-	 dup.c \
-	 env.c \
-	 exit.c \
-	 is.c \
-	 main.c \
-	 pipex.c \
-	 redirection.c \
-	 run.c \
+	 dup \
+	 env \
+	 exit \
+	 is \
+	 main \
+	 pipex \
+	 redirection \
+	 run \
 
 BONUS_SRCS = \
-	 dup_bonus.c\
-	 env_bonus.c \
-	 exit_bonus.c \
-	 is_bonus.c \
-	 main_bonus.c \
-	 pipex_bonus.c \
-	 redirection_bonus.c \
-	 run_bonus.c \
+	 dup \
+     env \
+     exit \
+     is \
+     main \
+     pipex \
+     redirection \
+     run \
 
-MANDA_OBJS = $(addprefix mandatory/, $(MANDA_SRCS:c=o))
-BONUS_OBJS = $(addprefix bonus/, $(BONUS_SRCS:c=o))
+MANDA_OBJS = $(MANDA_FILE:c=o)
+BONUS_OBJS = $(BONUS_FILE:c=o)
+
+MANDA_FILE = $(addsuffix .c, $(addprefix mandatory/, $(MANDA_SRCS:c=o)))
+BONUS_FILE = $(addsuffix _bonus.c, $(addprefix bonus/, $(MANDA_SRCS:c=o)))
+
+ifdef WITH_BONUS
+	OBJS = $(BONUS_OBJS)
+else
+	OBJS = $(MANDA_OBJS)
+endif
 
 all: $(NAME)
-bonus: $(BONUS)
 
-$(NAME): $(MANDA_OBJS)
+$(NAME): $(OBJS)
 	make -C $(PRINTFDIR)
 	$(CC) $(CFLAGS) -o $@ $^ $(PRINTFDIR)/$(PRINTFFILE)
 
-$(BONUS): $(BONUS_OBJS)
-	make -C $(PRINTFDIR)
-	$(CC) $(CFLAGS) -o $@ $^ $(PRINTFDIR)/$(PRINTFFILE)
+bonus:
+	make WITH_BONUS=1 all
 
 %o: %c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	make -C $(PRINTFDIR) clean
-	$(RM) $(MANDA_OBJS) $(BONUS_OBJS) $(MLXFILE) $(PRINTFFILE)
+	$(RM) $(MANDA_OBJS) $(BONUS_OBJS) $(PRINTFFILE)
 
 fclean: clean
 	make -C $(PRINTFDIR) fclean
