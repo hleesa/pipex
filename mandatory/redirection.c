@@ -44,5 +44,6 @@ void	output_redirection(char *path)
 		perror("dup2()");
 		exit(EXIT_FAILURE);
 	}
+	close(fd);
 	return ;
 }

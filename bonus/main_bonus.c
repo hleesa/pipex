@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../pipex_bonus.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -23,6 +23,6 @@ int	main(int argc, char **argv, char **envp)
 	else if (pid > 0)
 		wait(0);
 	else
-		run_cmd(pid, argv, envp);
+		run_cmd(pid, argv, envp, 1);
 	return (0);
 }

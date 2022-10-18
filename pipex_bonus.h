@@ -22,8 +22,8 @@
 
 enum e_pipe_fds
 {
-	READER_FD = 0,
-	WRITER_FD = 1,
+	READ_FD = 0,
+	WRITE_FD = 1,
 };
 
 enum e_bool
@@ -44,6 +44,6 @@ int		*make_pipe(void);
 void	input_redirection(char *path);
 void	output_redirection(char *path);
 void	run_execve(char *argv, char **envp);
-void	run_cmd(pid_t pid, char **argv, char **envp);
+void	run_cmd(pid_t pid, char **argv, char **envp, int arg_idx, int arg_end);
 
 #endif

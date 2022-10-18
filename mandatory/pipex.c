@@ -22,7 +22,7 @@ int	*make_pipe(void)
 		perror("malloc()");
 		exit(EXIT_FAILURE);
 	}
-	if (pipe(pipe_fds))
+	if (pipe(pipe_fds) == -1)
 	{
 		perror("pipe()");
 		exit(EXIT_FAILURE);

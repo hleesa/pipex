@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../pipex_bonus.h"
 
 void	run_execve(char *argv, char **envp)
 {
@@ -35,7 +35,7 @@ void	run_execve(char *argv, char **envp)
 	return ;
 }
 
-void	run_cmd(pid_t pid, char **argv, char **envp)
+void	run_cmd(pid_t pid, char **argv, char **envp, int arg_idx, int arg_end)
 {
 	int	*pipe_fds;
 
@@ -45,15 +45,21 @@ void	run_cmd(pid_t pid, char **argv, char **envp)
 		exit_fork_error();
 	else if (pid > 0)
 	{
+		// stdin을 file로 변경,
 		input_redirection(argv[1]);
+		// pipe[read] 닫는다. stdout을 pipe[write]로 변경
 		dup_write_fd(pipe_fds);
+		// 즉, stdin : file, stdout : pipe[write],
 		free(pipe_fds);
 		run_execve(argv[2], envp);
 	}
 	else
 	{
+		// stdout이 file을 가리킨다.
 		output_redirection(argv[4]);
+		// pipe[write]를 닫는다. stdin이 pipe[read]를 가리킨다.
 		dup_read_fd(pipe_fds);
+		// 즉, stdin : pipe[read], stdout : file
 		free(pipe_fds);
 		run_execve(argv[3], envp);
 	}

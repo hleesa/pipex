@@ -22,8 +22,8 @@
 
 enum e_pipe_fds
 {
-	READER_FD = 0,
-	WRITER_FD = 1,
+	READ_FD = 0,
+	WRITE_FD = 1,
 };
 
 enum e_bool

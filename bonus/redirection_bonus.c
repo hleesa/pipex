@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../pipex_bonus.h"
 
 void	input_redirection(char *path)
 {
@@ -44,5 +44,6 @@ void	output_redirection(char *path)
 		perror("dup2()");
 		exit(EXIT_FAILURE);
 	}
+	close(fd);
 	return ;
 }

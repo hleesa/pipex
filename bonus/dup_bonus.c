@@ -10,28 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../pipex_bonus.h"
 
 void	dup_write_fd(int *pipe_fds)
 {
-	close(pipe_fds[READER_FD]);
-	if (dup2(pipe_fds[WRITER_FD], STDOUT_FILENO) == -1)
+	close(pipe_fds[READ_FD]);
+	if (dup2(pipe_fds[WRITE_FD], STDOUT_FILENO) == -1)
 	{
 		perror("dup2()");
 		exit(EXIT_FAILURE);
 	}
-	close(pipe_fds[WRITER_FD]);
+	close(pipe_fds[WRITE_FD]);
 	return ;
 }
 
 void	dup_read_fd(int *pipe_fds)
 {
-	close(pipe_fds[WRITER_FD]);
-	if (dup2(pipe_fds[READER_FD], STDIN_FILENO) == -1)
+	close(pipe_fds[WRITE_FD]);
+	if (dup2(pipe_fds[READ_FD], STDIN_FILENO) == -1)
 	{
 		perror("dup2()");
 		exit(EXIT_FAILURE);
 	}
-	close(pipe_fds[READER_FD]);
+	close(pipe_fds[READ_FD]);
 	return ;
 }
