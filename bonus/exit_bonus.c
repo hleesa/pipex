@@ -10,20 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex_bonus.h"
+#include "pipex_bonus.h"
 
 void	exit_fork_error(void)
 {
 	perror("fork()");
 	exit(EXIT_FAILURE);
-}
-
-void	exit_if_invalid_arg(int argc)
-{
-	if (!is_right_args(argc))
-	{
-		perror("invalid arg");
-		exit(EXIT_FAILURE);
-	}
-	return ;
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex_bonus.h"
+#include "pipex_bonus.h"
 
 void	input_redirection(char *path)
 {
@@ -45,5 +45,14 @@ void	output_redirection(char *path)
 		exit(EXIT_FAILURE);
 	}
 	close(fd);
+	return ;
+}
+
+void	io_redirection(t_arg *arg)
+{
+	if (arg->idx == 2)
+		input_redirection(arg->vec[1]);
+	if (arg->idx + 2 == arg->end)
+		output_redirection(arg->vec[arg->end - 1]);
 	return ;
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex_bonus.h"
+#include "pipex_bonus.h"
 
 void	run_execve(char *argv, char **envp)
 {
@@ -36,11 +36,11 @@ void	run_execve(char *argv, char **envp)
 	exit(EXIT_FAILURE);
 }
 
-void	run_cmd(pid_t pid, char **argv, char **envp, int arg_idx, int arg_end)
+void	run_cmd(pid_t pid, t_arg *arg, char **envp)
 {
 	int	*pipe_fds;
 
-	if (arg_idx + 1 == arg_end)
+	if (arg->idx + 1 == arg->end)
 		return ;
 	pipe_fds = make_pipe();
 	pid = fork();
@@ -48,19 +48,17 @@ void	run_cmd(pid_t pid, char **argv, char **envp, int arg_idx, int arg_end)
 		exit_fork_error();
 	else if (pid > 0)
 	{
-		if (arg_idx == 2)
-			input_redirection(argv[1]);
 		dup_write_fd(pipe_fds);
-		if (arg_idx + 2 == arg_end)
-			output_redirection(argv[arg_end - 1]);
+		io_redirection(arg);
 		free(pipe_fds);
-		run_execve(argv[arg_idx], envp);
+		run_execve(arg->vec[arg->idx], envp);
 	}
 	else
 	{
 		dup_read_fd(pipe_fds);
 		free(pipe_fds);
-		run_cmd(pid, argv, envp, arg_idx + 1, arg_end);
+		++arg->idx;
+		run_cmd(pid, arg, envp);
 	}
 	return ;
 }

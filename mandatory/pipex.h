@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 16:55:49 by salee2            #+#    #+#             */
-/*   Updated: 2022/10/15 16:56:00 by salee2           ###   ########.fr       */
+/*   Created: 2022/09/29 12:23:55 by salee2            #+#    #+#             */
+/*   Updated: 2022/09/29 12:23:57 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/wait.h>
-# include "ft_printf/ft_printf.h"
+# include "../ft_printf/ft_printf.h"
 
 enum e_pipe_fds
 {
@@ -44,6 +44,6 @@ int		*make_pipe(void);
 void	input_redirection(char *path);
 void	output_redirection(char *path);
 void	run_execve(char *argv, char **envp);
-void	run_cmd(pid_t pid, char **argv, char **envp, int arg_idx, int arg_end);
+void	run_cmd(pid_t pid, char **argv, char **envp);
 
 #endif

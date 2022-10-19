@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex_bonus.h"
+#include "pipex_bonus.h"
 
 int	*make_pipe(void)
 {

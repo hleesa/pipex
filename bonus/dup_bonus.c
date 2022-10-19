@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex_bonus.h"
+#include "pipex_bonus.h"
 
 void	dup_write_fd(int *pipe_fds)
 {
