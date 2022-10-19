@@ -32,36 +32,35 @@ void	run_execve(char *argv, char **envp)
 			}
 		}
 	}
-	return ;
+	perror("");
+	exit(EXIT_FAILURE);
 }
 
 void	run_cmd(pid_t pid, char **argv, char **envp, int arg_idx, int arg_end)
 {
 	int	*pipe_fds;
 
+	if (arg_idx + 1 == arg_end)
+		return ;
 	pipe_fds = make_pipe();
 	pid = fork();
 	if (pid < 0)
 		exit_fork_error();
 	else if (pid > 0)
 	{
-		// stdin을 file로 변경,
-		input_redirection(argv[1]);
-		// pipe[read] 닫는다. stdout을 pipe[write]로 변경
+		if (arg_idx == 2)
+			input_redirection(argv[1]);
 		dup_write_fd(pipe_fds);
-		// 즉, stdin : file, stdout : pipe[write],
+		if (arg_idx + 2 == arg_end)
+			output_redirection(argv[arg_end - 1]);
 		free(pipe_fds);
-		run_execve(argv[2], envp);
+		run_execve(argv[arg_idx], envp);
 	}
 	else
 	{
-		// stdout이 file을 가리킨다.
-		output_redirection(argv[4]);
-		// pipe[write]를 닫는다. stdin이 pipe[read]를 가리킨다.
 		dup_read_fd(pipe_fds);
-		// 즉, stdin : pipe[read], stdout : file
 		free(pipe_fds);
-		run_execve(argv[3], envp);
+		run_cmd(pid, argv, envp, arg_idx + 1, arg_end);
 	}
 	return ;
 }

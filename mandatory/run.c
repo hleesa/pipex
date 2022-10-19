@@ -32,7 +32,8 @@ void	run_execve(char *argv, char **envp)
 			}
 		}
 	}
-	return ;
+	perror("");
+	exit(EXIT_FAILURE);
 }
 
 void	run_cmd(pid_t pid, char **argv, char **envp)

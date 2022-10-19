@@ -23,6 +23,6 @@ int	main(int argc, char **argv, char **envp)
 	else if (pid > 0)
 		wait(0);
 	else
-		run_cmd(pid, argv, envp, 1);
+		run_cmd(pid, argv, envp, 2, argc);
 	return (0);
 }
