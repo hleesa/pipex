@@ -32,7 +32,7 @@ void	run_execve(char *argv, char **envp)
 			}
 		}
 	}
-	perror("");
+	ft_printf("pipex: %s: command not found\n", argv);
 	exit(EXIT_FAILURE);
 }
 

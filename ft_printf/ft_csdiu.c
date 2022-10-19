@@ -18,7 +18,7 @@ ssize_t	c_func(va_list ap)
 	ssize_t	ret;
 
 	c = va_arg(ap, int);
-	ret = write(1, &c, 1);
+	ret = write(FD, &c, 1);
 	return (ret);
 }
 
@@ -28,9 +28,9 @@ ssize_t	s_func(va_list ap)
 	const char	*str = va_arg(ap, const char *);
 
 	if (str == NULL)
-		ret = write(1, "(null)", 6);
+		ret = write(FD, "(null)", 6);
 	else
-		ret = write(1, str, ft_strlen(str));
+		ret = write(FD, str, ft_strlen(str));
 	return (ret);
 }
 
@@ -44,7 +44,7 @@ ssize_t	d_func(va_list ap)
 	d_str = ft_itoa(d);
 	if (d_str == 0)
 		return (-1);
-	ret = write(1, d_str, ft_strlen(d_str));
+	ret = write(FD, d_str, ft_strlen(d_str));
 	free(d_str);
 	return (ret);
 }
@@ -64,7 +64,7 @@ ssize_t	u_func(va_list ap)
 	u_str = ft_utoa(u);
 	if (u_str == 0)
 		return (-1);
-	ret = write(1, u_str, ft_strlen(u_str));
+	ret = write(FD, u_str, ft_strlen(u_str));
 	free(u_str);
 	return (ret);
 }

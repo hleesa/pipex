@@ -83,7 +83,7 @@ int	print_format(const char *format, va_list ap, \
 			++i;
 		}
 		else
-			printed_byte = write(1, format + i, 1);
+			printed_byte = write(FD, format + i, 1);
 		if (printed_byte == -1)
 			return (-1);
 		printed_total_byte += printed_byte;

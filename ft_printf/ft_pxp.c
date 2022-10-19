@@ -45,7 +45,7 @@ ssize_t	p_func(va_list ap)
 	hex_addr = itoh(addr, to_hex, 1);
 	if (hex_addr == 0)
 		return (-1);
-	ret = write(1, hex_addr, ft_strlen(hex_addr));
+	ret = write(FD, hex_addr, ft_strlen(hex_addr));
 	free(hex_addr);
 	return (ret);
 }
@@ -61,7 +61,7 @@ ssize_t	xl_func(va_list ap)
 	hex = itoh(u, to_hex, 0);
 	if (hex == 0)
 		return (-1);
-	ret = write(1, hex, ft_strlen(hex));
+	ret = write(FD, hex, ft_strlen(hex));
 	free(hex);
 	return (ret);
 }
@@ -77,7 +77,7 @@ ssize_t	xu_func(va_list ap)
 	hex = itoh(u, to_hex, 0);
 	if (hex == 0)
 		return (-1);
-	ret = write(1, hex, ft_strlen(hex));
+	ret = write(FD, hex, ft_strlen(hex));
 	free(hex);
 	return (ret);
 }
@@ -88,6 +88,6 @@ ssize_t	percent_func(va_list ap)
 
 	if (ap == NULL)
 		return (-1);
-	ret = write(1, "%", 1);
+	ret = write(FD, "%", 1);
 	return (ret);
 }

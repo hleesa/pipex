@@ -18,7 +18,8 @@ void	input_redirection(char *path)
 
 	if (fd == -1)
 	{
-		perror("open()");
+		ft_printf("pipex: %s: ", path);
+		perror("");
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
@@ -36,7 +37,8 @@ void	output_redirection(char *path)
 
 	if (fd == -1)
 	{
-		perror("open()");
+		ft_printf("pipex: %s:", path);
+		perror("");
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)

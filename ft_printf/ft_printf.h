@@ -16,7 +16,7 @@
 # include <stdarg.h>
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
-
+# define FD STDERR_FILENO
 # define HEX_LEN 19
 
 ssize_t	c_func(va_list ap);
