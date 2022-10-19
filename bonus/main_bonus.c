@@ -12,7 +12,7 @@
 
 #include "pipex_bonus.h"
 
-void	init_arg_info(t_arg *arg_info, char **argv, int argc)
+void	init_arg(t_arg *arg_info, char **argv, int argc)
 {
 	if (!is_right_args(argc))
 	{
@@ -27,10 +27,10 @@ void	init_arg_info(t_arg *arg_info, char **argv, int argc)
 
 int	main(int argc, char **argv, char **envp)
 {
-	pid_t pid;
-	t_arg arg;
+	pid_t	pid;
+	t_arg	arg;
 
-	init_arg_info(&arg, argv, argc);
+	init_arg(&arg, argv, argc);
 	pid = fork();
 	if (pid < 0)
 		exit_fork_error();
