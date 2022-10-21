@@ -34,8 +34,8 @@ enum e_bool
 
 typedef int	t_bool;
 
-void	dup_write_fd(int *pipe_fds);
-void	dup_read_fd(int *pipe_fds);
+void	redir_w_pipe_to_stdout(int *pipe_fds);
+void	redir_r_pipe_to_stdin(int *pipe_fds);
 char	**get_file_list(const char *name, char **env, char *file_name);
 void	exit_fork_error(void);
 void	exit_if_invalid_arg(int argc);

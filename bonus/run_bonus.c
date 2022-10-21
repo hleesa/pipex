@@ -48,14 +48,14 @@ void	run_cmd(pid_t pid, t_arg *arg, char **envp)
 		exit_fork_error();
 	else if (pid > 0)
 	{
-		dup_write_fd(pipe_fds);
+		redir_w_pipe_to_stdout(pipe_fds);
 		io_redirection(arg);
 		free(pipe_fds);
 		run_execve(arg->vec[arg->idx], envp);
 	}
 	else
 	{
-		dup_read_fd(pipe_fds);
+		redir_r_pipe_to_stdin(pipe_fds);
 		free(pipe_fds);
 		++arg->idx;
 		run_cmd(pid, arg, envp);

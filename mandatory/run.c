@@ -47,14 +47,14 @@ void	run_cmd(pid_t pid, char **argv, char **envp)
 	else if (pid > 0)
 	{
 		input_redirection(argv[1]);
-		dup_write_fd(pipe_fds);
+		redir_w_pipe_to_stdout(pipe_fds);
 		free(pipe_fds);
 		run_execve(argv[2], envp);
 	}
 	else
 	{
 		output_redirection(argv[4]);
-		dup_read_fd(pipe_fds);
+		redir_r_pipe_to_stdin(pipe_fds);
 		free(pipe_fds);
 		run_execve(argv[3], envp);
 	}

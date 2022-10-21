@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-void	dup_write_fd(int *pipe_fds)
+void	redir_w_pipe_to_stdout(int *pipe_fds)
 {
 	close(pipe_fds[READ_FD]);
 	if (dup2(pipe_fds[WRITE_FD], STDOUT_FILENO) == -1)
@@ -24,7 +24,7 @@ void	dup_write_fd(int *pipe_fds)
 	return ;
 }
 
-void	dup_read_fd(int *pipe_fds)
+void	redir_r_pipe_to_stdin(int *pipe_fds)
 {
 	close(pipe_fds[WRITE_FD]);
 	if (dup2(pipe_fds[READ_FD], STDIN_FILENO) == -1)
