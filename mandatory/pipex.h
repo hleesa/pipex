@@ -32,6 +32,13 @@ enum e_bool
 	TRUE
 };
 
+typedef struct s_arg
+{
+	char	**vec;
+	int		idx;
+	int		end;
+}	t_arg;
+
 typedef int	t_bool;
 
 void	redir_w_pipe_to_stdout(int *pipe_fds);
@@ -44,6 +51,7 @@ int		*make_pipe(void);
 void	input_redirection(char *path);
 void	output_redirection(char *path);
 void	run_execve(char *argv, char **envp);
-void	run_cmd(pid_t pid, char **argv, char **envp);
+void	run_cmd(pid_t pid, t_arg *arg, char **envp);
+void	io_redirection(t_arg *arg);
 
 #endif

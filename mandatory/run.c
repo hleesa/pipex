@@ -36,27 +36,30 @@ void	run_execve(char *argv, char **envp)
 	exit(EXIT_FAILURE);
 }
 
-void	run_cmd(pid_t pid, char **argv, char **envp)
+void	run_cmd(pid_t pid, t_arg *arg, char **envp)
 {
 	int	*pipe_fds;
 
+	if (arg->idx + 1 == arg->end)
+		return ;
 	pipe_fds = make_pipe();
 	pid = fork();
 	if (pid < 0)
 		exit_fork_error();
 	else if (pid > 0)
 	{
-		input_redirection(argv[1]);
-		redir_w_pipe_to_stdout(pipe_fds);
+		redir_r_pipe_to_stdin(pipe_fds);
 		free(pipe_fds);
-		run_execve(argv[2], envp);
+		++arg->idx;
+		run_cmd(pid, arg, envp);
+		wait(0);
 	}
 	else
 	{
-		output_redirection(argv[4]);
-		redir_r_pipe_to_stdin(pipe_fds);
+		redir_w_pipe_to_stdout(pipe_fds);
+		io_redirection(arg);
 		free(pipe_fds);
-		run_execve(argv[3], envp);
+		run_execve(arg->vec[arg->idx], envp);
 	}
 	return ;
 }
