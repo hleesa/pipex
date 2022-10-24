@@ -31,9 +31,48 @@ void	input_redirection(char *path)
 	return ;
 }
 
+void	input_redirection_heredoc(char *eof)
+{
+	const char *path = "_SaLeE__TmP_";
+	const int	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+
+	if (fd == -1)
+	{
+		ft_printf("pipex: %s: ", path);
+		perror("");
+		exit(EXIT_FAILURE);
+	}
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2()");
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+	return ;
+}
+
 void	output_redirection(char *path)
 {
 	const int	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+
+	if (fd == -1)
+	{
+		ft_printf("pipex: %s:", path);
+		perror("");
+		exit(EXIT_FAILURE);
+	}
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		perror("dup2()");
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+	return ;
+}
+
+void	output_redirection_append(char *path)
+{
+	const int	fd = open(path, O_RDWR | O_CREAT | O_APPEND, 0644);
 
 	if (fd == -1)
 	{
