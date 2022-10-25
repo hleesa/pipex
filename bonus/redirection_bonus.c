@@ -30,26 +30,26 @@ void	input_redirection(char *path)
 	close(fd);
 	return ;
 }
-
-void	input_redirection_heredoc(char *eof)
-{
-	const char *path = "_SaLeE__TmP_";
-	const int	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
-
-	if (fd == -1)
-	{
-		ft_printf("pipex: %s: ", path);
-		perror("");
-		exit(EXIT_FAILURE);
-	}
-	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		perror("dup2()");
-		exit(EXIT_FAILURE);
-	}
-	close(fd);
-	return ;
-}
+//
+//void	input_redirection_heredoc(char *eof)
+//{
+//	const char *path = "_SaLeE__TmP_";
+//	const int	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+//
+//	if (fd == -1)
+//	{
+//		ft_printf("pipex: %s: ", path);
+//		perror("");
+//		exit(EXIT_FAILURE);
+//	}
+//	if (dup2(fd, STDIN_FILENO) == -1)
+//	{
+//		perror("dup2()");
+//		exit(EXIT_FAILURE);
+//	}
+//	close(fd);
+//	return ;
+//}
 
 void	output_redirection(char *path)
 {
@@ -96,4 +96,38 @@ void	io_redirection(t_arg *arg)
 	if (arg->idx + 2 == arg->end)
 		output_redirection(arg->vec[arg->end - 1]);
 	return ;
+}
+
+
+
+void test1(char **envp)
+{
+	char *file = "/usr/bin/mktemp";
+	char *exec_agv[] = {"mktemp", "/tmp/example", NULL};
+	pid_t	pid;
+	int *pipe_fds = make_pipe();
+	char buf[200];
+	ft_memset(buf, 0, 200);
+
+	pid = fork();
+	if(pid < 0)
+	{
+		exit_fork_error();
+	}
+	else if (pid > 0)
+	{
+		redir_r_pipe_to_stdin(pipe_fds);
+//		free(pipe_fds);
+		wait(0);
+		read(pipe_fds[WRITE_FD], buf, 100);
+		ft_printf("buf:%s\n", buf);
+	}
+	else
+	{
+		redir_w_pipe_to_stdout(pipe_fds);
+//		free(pipe_fds);
+		execve(file, exec_agv, envp);
+		ft_printf("here\n");
+	}
+
 }
