@@ -54,4 +54,6 @@ void	run_execve(char *argv, char **envp);
 void	run_cmd(pid_t pid, t_arg *arg, char **envp);
 void	io_redirection(t_arg *arg);
 
+char *test1(char **envp);
+
 #endif

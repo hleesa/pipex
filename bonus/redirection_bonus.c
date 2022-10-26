@@ -100,14 +100,16 @@ void	io_redirection(t_arg *arg)
 
 
 
-void test1(char **envp)
+char *test1(char **envp)
 {
 	char *file = "/usr/bin/mktemp";
-	char *exec_agv[] = {"mktemp", "/tmp/example", NULL};
+//	char *exec_agv[] = {"mktemp", "/tmp/pipex_tmp_XXXXXXXXXX", NULL};
+	char *exec_agv[] = {"mktemp", "/var/folders/zz/zyxvpxvq6csfxvn_n000crf000363h/T/pipex_tmp_XXXXXXXXXX", NULL};
 	pid_t	pid;
 	int *pipe_fds = make_pipe();
 	char buf[200];
 	ft_memset(buf, 0, 200);
+	char *ret;
 
 	pid = fork();
 	if(pid < 0)
@@ -119,8 +121,9 @@ void test1(char **envp)
 		redir_r_pipe_to_stdin(pipe_fds);
 //		free(pipe_fds);
 		wait(0);
-		read(pipe_fds[WRITE_FD], buf, 100);
-		ft_printf("buf:%s\n", buf);
+		read(STDIN_FILENO, buf, 100);
+		ret = ft_strdup(buf);
+		return (ret);
 	}
 	else
 	{
@@ -129,5 +132,5 @@ void test1(char **envp)
 		execve(file, exec_agv, envp);
 		ft_printf("here\n");
 	}
-
+	return NULL;
 }
