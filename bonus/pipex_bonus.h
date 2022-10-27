@@ -53,7 +53,7 @@ void	output_redirection(char *path);
 void	run_execve(char *argv, char **envp);
 void	run_cmd(pid_t pid, t_arg *arg, char **envp);
 void	io_redirection(t_arg *arg);
-
-char *test1(char **envp);
+char	*ft_get_env(const char *name, char **env);
+char	*ft_mktemp(char **envp);
 
 #endif

@@ -32,17 +32,18 @@ BONUS_SRCS = \
 	 dup \
      env \
      exit \
+     heredoc \
      is \
      main \
      pipex \
      redirection \
      run \
 
+MANDA_FILE = $(addsuffix .c, $(addprefix mandatory/, $(MANDA_SRCS:.c=.o)))
+BONUS_FILE = $(addsuffix _bonus.c, $(addprefix bonus/, $(BONUS_SRCS:.c=.o)))
+
 MANDA_OBJS = $(MANDA_FILE:c=o)
 BONUS_OBJS = $(BONUS_FILE:c=o)
-
-MANDA_FILE = $(addsuffix .c, $(addprefix mandatory/, $(MANDA_SRCS:c=o)))
-BONUS_FILE = $(addsuffix _bonus.c, $(addprefix bonus/, $(MANDA_SRCS:c=o)))
 
 ifdef WITH_BONUS
 	OBJS = $(BONUS_OBJS)
