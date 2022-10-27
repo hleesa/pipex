@@ -32,9 +32,9 @@ BONUS_SRCS = \
 	 dup \
      env \
      exit \
-     heredoc \
      is \
      main \
+     mktemp \
      pipex \
      redirection \
      run \
