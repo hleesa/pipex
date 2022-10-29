@@ -21,9 +21,12 @@ void	init_arg(t_arg *arg_info, char **argv, int argc)
 		perror("invalid arg");
 		exit(EXIT_FAILURE);
 	}
+	arg_info->stdin_fd = dup(STDIN_FILENO);
 	arg_info->vec = argv;
 	arg_info->idx = 2;
 	arg_info->end = argc;
+	if (ft_strcmp(argv[1], "here_doc") == 0)
+		arg_info->idx = 3;
 	return ;
 }
 
@@ -42,11 +45,5 @@ int	main(int argc, char **argv, char **envp)
 		wait(0);
 	else
 		run_cmd(pid, &arg, envp);
-//	char *pre = ft_strdup("/var");
-//	file = ft_strjoin(pre, file);
-//	ft_printf("%s", file);
-//	int ret = unlink(file);
-//	perror("");
-//	ft_printf("errno:%d, ret:%d\n", errno, ret);
 	return (0);
 }

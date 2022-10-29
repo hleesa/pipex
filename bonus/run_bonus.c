@@ -57,7 +57,7 @@ void	run_cmd(pid_t pid, t_arg *arg, char **envp)
 	else
 	{
 		redir_w_pipe_to_stdout(pipe_fds);
-		io_redirection(arg);
+		io_redirection(arg, envp);
 		free(pipe_fds);
 		run_execve(arg->vec[arg->idx], envp);
 	}

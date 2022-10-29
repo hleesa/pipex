@@ -32,6 +32,7 @@ BONUS_SRCS = \
 	 dup \
      env \
      exit \
+     heredoc \
      is \
      main \
      mktemp \

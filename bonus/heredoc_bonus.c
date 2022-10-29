@@ -12,42 +12,35 @@
 
 #include "pipex_bonus.h"
 
-void	input_redirection_heredoc(char **envp, char *eof)
+void	input_redirection_heredoc(char **envp, char *eof, int stdin_fd)
 {
 	const char	*path = ft_mktemp(envp);
 	const int	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
 
+	ft_printf("eof:%s\n", eof);
 	if (fd == -1)
 	{
 		ft_printf("pipex: %s: ", path);
 		perror("");
 		exit(EXIT_FAILURE);
 	}
-	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		perror("dup2()");
-		exit(EXIT_FAILURE);
-	}
-	close(fd);
-	return ;
-}
-
-void	wrtie_heredoc(char **envp, char *eof)
-{
-	input_redirection_heredoc(envp, eof);
 	while (TRUE)
 	{
-		char *input = get_next_line(STDIN_FILENO);
+		char *input = get_next_line(stdin_fd);
 		if (input == NULL)
-			return;
-		if (ft_strcmp(input, eof) == 0)
+			break;
+		if (ft_strncmp(input, eof, ft_strlen(eof)) == 0)
 		{
 			free(input);
-			return;
+			break ;
 		} else
 		{
-			write(STDIN_FILENO, input, ft_strlen(input));
+			write(fd, input, ft_strlen(input));
 			free(input);
 		}
 	}
+	dup2(fd, STDIN_FILENO);
+	unlink(path);
+	close(fd);
+	return ;
 }

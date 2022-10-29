@@ -37,6 +37,7 @@ typedef struct s_arg
 	char	**vec;
 	int		idx;
 	int		end;
+	int 	stdin_fd;
 }	t_arg;
 
 typedef int	t_bool;
@@ -52,8 +53,9 @@ void	input_redirection(char *path);
 void	output_redirection(char *path);
 void	run_execve(char *argv, char **envp);
 void	run_cmd(pid_t pid, t_arg *arg, char **envp);
-void	io_redirection(t_arg *arg);
+void	io_redirection(t_arg *arg, char **envp);
 char	*ft_get_env(const char *name, char **env);
 char	*ft_mktemp(char **envp);
+void	input_redirection_heredoc(char **envp, char *eof, int stdin);
 
 #endif

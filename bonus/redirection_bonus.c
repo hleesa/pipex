@@ -69,11 +69,13 @@ void	output_redirection_append(char *path)
 	return ;
 }
 
-void	io_redirection(t_arg *arg)
+void	io_redirection(t_arg *arg, char **envp)
 {
-	if (arg->idx == 2)
+	if (arg->idx == 3 && (ft_strcmp(arg->vec[1], "here_doc") == 0))
+		input_redirection_heredoc(envp, arg->vec[2], arg->stdin_fd);
+	else if (arg->idx == 2)
 		input_redirection(arg->vec[1]);
-	if (arg->idx + 2 == arg->end)
+	else if (arg->idx + 2 == arg->end)
 		output_redirection(arg->vec[arg->end - 1]);
 	return ;
 }

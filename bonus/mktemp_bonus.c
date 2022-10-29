@@ -19,21 +19,23 @@ char	*get_temp_file(char **envp)
 	char	*temp_file;
 
 	temp_path = ft_get_env("TMPDIR", envp);
-	temp_file_name = "tmp.pipexXXXXXXXXXXXXXXXXXXXX";
+	temp_file_name = "tmp.pipex.XXXXXXXXXXXXXXXXXXXX";
 	temp_file = ft_strjoin(temp_path, "/");
 	temp_file = ft_strjoin(temp_file, temp_file_name);
 	return (temp_file);
+
 }
 
 void	exec_mktemp(char **envp)
 {
 	char	*file;
-	char	*exec_agv[3];
+	char	*exec_agv[4];
 
 	file = ft_strdup("/usr/bin/mktemp");
 	exec_agv[0] = ft_strdup("mktemp");
-	exec_agv[1] = get_temp_file(envp);
-	exec_agv[2] = NULL;
+	exec_agv[1] = "-u";
+	exec_agv[2] = get_temp_file(envp);
+	exec_agv[3] = NULL;
 	execve(file, exec_agv, envp);
 	perror("");
 	exit(EXIT_FAILURE);
