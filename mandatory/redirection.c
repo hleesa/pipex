@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-void	input_redirection(char *path)
+void	redirect_stdin_to_file(char *path)
 {
 	const int	fd = open(path, O_RDONLY);
 
@@ -31,7 +31,7 @@ void	input_redirection(char *path)
 	return ;
 }
 
-void	output_redirection(char *path)
+void	redirect_stdout_to_file(char *path)
 {
 	const int	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
 
@@ -53,8 +53,8 @@ void	output_redirection(char *path)
 void	io_redirection(t_arg *arg)
 {
 	if (arg->idx == 2)
-		input_redirection(arg->vec[1]);
+		redirect_stdin_to_file(arg->vec[1]);
 	if (arg->idx + 2 == arg->end)
-		output_redirection(arg->vec[arg->end - 1]);
+		redirect_stdout_to_file(arg->vec[arg->end - 1]);
 	return ;
 }

@@ -12,15 +12,9 @@
 
 #include "pipex_bonus.h"
 
-//extern int errno;
-
 void	init_arg(t_arg *arg_info, char **argv, int argc)
 {
-	if (!is_right_args(argc))
-	{
-		perror("invalid arg");
-		exit(EXIT_FAILURE);
-	}
+	exit_if_invalid_arg(argc);
 	arg_info->stdin_fd = dup(STDIN_FILENO);
 	arg_info->vec = argv;
 	arg_info->idx = 2;
@@ -36,8 +30,6 @@ int	main(int argc, char **argv, char **envp)
 	t_arg	arg;
 
 	init_arg(&arg, argv, argc);
-	char *file = ft_mktemp(envp);
-	ft_printf("%s\n", file);
 	pid = fork();
 	if (pid < 0)
 		exit_fork_error();

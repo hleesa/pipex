@@ -17,3 +17,24 @@ void	exit_fork_error(void)
 	perror("fork()");
 	exit(EXIT_FAILURE);
 }
+
+void	exit_if_open_error(int fd, char *path)
+{
+	if (fd == -1)
+	{
+		ft_printf("pipex: %s: ", path);
+		perror("");
+		exit(EXIT_FAILURE);
+	}
+	return ;
+}
+
+void	exit_if_invalid_arg(int argc)
+{
+	if (argc < 5)
+	{
+		perror("invalid arg");
+		exit(EXIT_FAILURE);
+	}
+	return ;
+}

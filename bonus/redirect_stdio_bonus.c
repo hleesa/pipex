@@ -12,16 +12,11 @@
 
 #include "pipex_bonus.h"
 
-void	input_redirection(char *path)
+void	redirect_stdin_to_file(char *path)
 {
 	const int	fd = open(path, O_RDONLY);
 
-	if (fd == -1)
-	{
-		ft_printf("pipex: %s: ", path);
-		perror("");
-		exit(EXIT_FAILURE);
-	}
+	exit_if_open_error(fd, path);
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
 		perror("dup2()");
@@ -31,16 +26,11 @@ void	input_redirection(char *path)
 	return ;
 }
 
-void	output_redirection(char *path)
+void	redirect_stdout_to_file(char *path)
 {
 	const int	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
 
-	if (fd == -1)
-	{
-		ft_printf("pipex: %s:", path);
-		perror("");
-		exit(EXIT_FAILURE);
-	}
+	exit_if_open_error(fd, path);
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("dup2()");
@@ -50,7 +40,7 @@ void	output_redirection(char *path)
 	return ;
 }
 
-void	output_redirection_append(char *path)
+void	redirect_stdout_to_file_append(char *path)
 {
 	const int	fd = open(path, O_RDWR | O_CREAT | O_APPEND, 0644);
 
@@ -72,10 +62,10 @@ void	output_redirection_append(char *path)
 void	io_redirection(t_arg *arg, char **envp)
 {
 	if (arg->idx == 3 && (ft_strcmp(arg->vec[1], "here_doc") == 0))
-		input_redirection_heredoc(envp, arg->vec[2], arg->stdin_fd);
+		redirect_stdin_to_heredoc(envp, arg->vec[2], arg->stdin_fd);
 	else if (arg->idx == 2)
-		input_redirection(arg->vec[1]);
+		redirect_stdin_to_file(arg->vec[1]);
 	else if (arg->idx + 2 == arg->end)
-		output_redirection(arg->vec[arg->end - 1]);
+		redirect_stdout_to_file(arg->vec[arg->end - 1]);
 	return ;
 }

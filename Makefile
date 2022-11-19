@@ -29,15 +29,14 @@ MANDA_SRCS = \
 	 run \
 
 BONUS_SRCS = \
-	 dup \
      env \
      exit \
      heredoc \
-     is \
      main \
      mktemp \
      pipex \
-     redirection \
+     redirect_pipe \
+     redirect_stdio \
      run \
 
 MANDA_FILE = $(addsuffix .c, $(addprefix mandatory/, $(MANDA_SRCS:.c=.o)))

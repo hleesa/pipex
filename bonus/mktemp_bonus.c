@@ -23,7 +23,6 @@ char	*get_temp_file(char **envp)
 	temp_file = ft_strjoin(temp_path, "/");
 	temp_file = ft_strjoin(temp_file, temp_file_name);
 	return (temp_file);
-
 }
 
 void	exec_mktemp(char **envp)
@@ -54,7 +53,7 @@ char	*ft_mktemp(char **envp)
 		exit_fork_error();
 	else if (pid > 0)
 	{
-		redir_r_pipe_to_stdin(pipe_fds);
+		redirect_r_pipe_to_stdin(pipe_fds);
 		free(pipe_fds);
 		wait(0);
 		read(STDIN_FILENO, buf, 100);
@@ -62,7 +61,7 @@ char	*ft_mktemp(char **envp)
 	}
 	else
 	{
-		redir_w_pipe_to_stdout(pipe_fds);
+		redirect_w_pipe_to_stdout(pipe_fds);
 		free(pipe_fds);
 		exec_mktemp(envp);
 	}
