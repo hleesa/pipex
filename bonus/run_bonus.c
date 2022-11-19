@@ -52,6 +52,7 @@ void	run_cmd(pid_t pid, t_arg *arg, char **envp)
 		++arg->idx;
 		run_cmd(pid, arg, envp);
 		wait(0);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{

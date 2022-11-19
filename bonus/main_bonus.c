@@ -22,13 +22,14 @@ void	init_arg(t_arg *arg_info, char **argv, int argc)
 	arg_info->is_heredoc = FALSE;
 	if (ft_strcmp(argv[1], "here_doc") == 0)
 	{
+		exit_if_invalid_heredoc_arg(argc);
 		arg_info->idx = 3;
 		arg_info->is_heredoc = TRUE;
 	}
 	return ;
 }
 
-void check_likes(void)
+void	check_leaks(void)
 {
 	system("leaks pipex");
 }
@@ -38,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid;
 	t_arg	arg;
 
-//	atexit(check_likes);
+//	atexit(check_leaks);
 	init_arg(&arg, argv, argc);
 	pid = fork();
 	exit_if_fork_error(pid);
@@ -48,4 +49,3 @@ int	main(int argc, char **argv, char **envp)
 		run_cmd(pid, &arg, envp);
 	return (0);
 }
-
