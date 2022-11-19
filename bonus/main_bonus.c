@@ -29,17 +29,11 @@ void	init_arg(t_arg *arg_info, char **argv, int argc)
 	return ;
 }
 
-void	check_leaks(void)
-{
-	system("leaks pipex");
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
 	t_arg	arg;
 
-//	atexit(check_leaks);
 	init_arg(&arg, argv, argc);
 	pid = fork();
 	exit_if_fork_error(pid);
