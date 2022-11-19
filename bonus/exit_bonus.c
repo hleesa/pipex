@@ -45,7 +45,7 @@ void	exit_if_invalid_arg(int argc)
 
 void	exit_if_invalid_heredoc_arg(int argc)
 {
-	if (argc != 6)
+	if (argc < 6)
 	{
 		perror("invalid arg");
 		exit(EXIT_FAILURE);
