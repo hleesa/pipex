@@ -38,6 +38,7 @@ typedef struct s_arg
 	int		idx;
 	int		end;
 	int		stdin_fd;
+	int 	is_heredoc;
 }	t_arg;
 
 typedef int	t_bool;

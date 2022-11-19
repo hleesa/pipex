@@ -19,8 +19,12 @@ void	init_arg(t_arg *arg_info, char **argv, int argc)
 	arg_info->vec = argv;
 	arg_info->idx = 2;
 	arg_info->end = argc;
+	arg_info->is_heredoc = FALSE;
 	if (ft_strcmp(argv[1], "here_doc") == 0)
+	{
 		arg_info->idx = 3;
+		arg_info->is_heredoc = TRUE;
+	}
 	return ;
 }
 
