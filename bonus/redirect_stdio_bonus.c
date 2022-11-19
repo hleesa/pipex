@@ -54,7 +54,7 @@ void	redirect_stdout_to_file_append(char *path)
 	return ;
 }
 
-void	io_redirection(t_arg *arg, char **envp)
+void	redirect_stdio(t_arg *arg, char **envp)
 {
 	if (arg->is_heredoc)
 	{

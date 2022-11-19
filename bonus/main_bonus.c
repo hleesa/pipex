@@ -28,18 +28,24 @@ void	init_arg(t_arg *arg_info, char **argv, int argc)
 	return ;
 }
 
+void check_likes(void)
+{
+	system("leaks pipex");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
 	t_arg	arg;
 
+//	atexit(check_likes);
 	init_arg(&arg, argv, argc);
 	pid = fork();
-	if (pid < 0)
-		exit_fork_error();
-	else if (pid > 0)
+	exit_if_fork_error(pid);
+	if (pid > 0)
 		wait(0);
 	else
 		run_cmd(pid, &arg, envp);
 	return (0);
 }
+

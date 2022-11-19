@@ -49,9 +49,8 @@ char	*ft_mktemp(char **envp)
 	pipe_fds = make_pipe();
 	ft_memset(buf, 0, 100);
 	pid = fork();
-	if (pid < 0)
-		exit_fork_error();
-	else if (pid > 0)
+	exit_if_fork_error(pid);
+	if (pid > 0)
 	{
 		redirect_r_pipe_to_stdin(pipe_fds);
 		free(pipe_fds);

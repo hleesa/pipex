@@ -44,9 +44,8 @@ void	run_cmd(pid_t pid, t_arg *arg, char **envp)
 		return ;
 	pipe_fds = make_pipe();
 	pid = fork();
-	if (pid < 0)
-		exit_fork_error();
-	else if (pid > 0)
+	exit_if_fork_error(pid);
+	if (pid > 0)
 	{
 		redirect_r_pipe_to_stdin(pipe_fds);
 		free(pipe_fds);
@@ -57,7 +56,7 @@ void	run_cmd(pid_t pid, t_arg *arg, char **envp)
 	else
 	{
 		redirect_w_pipe_to_stdout(pipe_fds);
-		io_redirection(arg, envp);
+		redirect_stdio(arg, envp);
 		free(pipe_fds);
 		run_execve(arg->vec[arg->idx], envp);
 	}

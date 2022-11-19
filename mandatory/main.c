@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/29 12:23:40 by salee2            #+#    #+#             */
-/*   Updated: 2022/09/29 12:23:42 by salee2           ###   ########.fr       */
+/*   Created: 2022/11/19 20:42:54 by salee2            #+#    #+#             */
+/*   Updated: 2022/11/19 20:42:55 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 void	init_arg(t_arg *arg_info, char **argv, int argc)
 {
-	if (!is_right_args(argc))
-	{
-		perror("invalid arg");
-		exit(EXIT_FAILURE);
-	}
+	exit_if_invalid_arg(argc);
 	arg_info->vec = argv;
 	arg_info->idx = 2;
 	arg_info->end = argc;
@@ -32,9 +28,8 @@ int	main(int argc, char **argv, char **envp)
 
 	init_arg(&arg, argv, argc);
 	pid = fork();
-	if (pid < 0)
-		exit_fork_error();
-	else if (pid > 0)
+	exit_if_fork_error(pid);
+	if (pid > 0)
 		wait(0);
 	else
 		run_cmd(pid, &arg, envp);

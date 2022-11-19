@@ -12,10 +12,14 @@
 
 #include "pipex_bonus.h"
 
-void	exit_fork_error(void)
+void	exit_if_fork_error(pid_t pid)
 {
-	perror("fork()");
-	exit(EXIT_FAILURE);
+	if (pid < 0)
+	{
+		perror("fork()");
+		exit(EXIT_FAILURE);
+	}
+	return ;
 }
 
 void	exit_if_open_error(int fd, char *path)

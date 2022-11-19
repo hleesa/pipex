@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/29 12:23:55 by salee2            #+#    #+#             */
-/*   Updated: 2022/09/29 12:23:57 by salee2           ###   ########.fr       */
+/*   Created: 2022/11/19 20:43:04 by salee2            #+#    #+#             */
+/*   Updated: 2022/11/19 20:43:04 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ typedef struct s_arg
 
 typedef int	t_bool;
 
+char	*ft_get_env(const char *name, char **env);
+char	**get_file_list(const char *name, char **env, char *file_name);
+void	exit_if_fork_error(pid_t pid);
+void	exit_if_open_error(int fd, char *path);
+void	exit_if_invalid_arg(int argc);
+int		*make_pipe(void);
 void	redirect_w_pipe_to_stdout(int *pipe_fds);
 void	redirect_r_pipe_to_stdin(int *pipe_fds);
-char	**get_file_list(const char *name, char **env, char *file_name);
-void	exit_fork_error(void);
-void	exit_if_invalid_arg(int argc);
-t_bool	is_right_args(int argc);
-int		*make_pipe(void);
 void	redirect_stdin_to_file(char *path);
 void	redirect_stdout_to_file(char *path);
 void	run_execve(char *argv, char **envp);

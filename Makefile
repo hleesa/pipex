@@ -19,14 +19,13 @@ CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 
 MANDA_SRCS = \
-	 dup \
-	 env \
-	 exit \
-	 is \
-	 main \
-	 pipex \
-	 redirection \
-	 run \
+     env \
+     exit \
+     main \
+     pipex \
+     redirect_pipe \
+     redirect_stdio \
+     run \
 
 BONUS_SRCS = \
      env \

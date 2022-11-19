@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 15:59:38 by salee2            #+#    #+#             */
-/*   Updated: 2022/10/15 15:59:39 by salee2           ###   ########.fr       */
+/*   Created: 2022/11/19 20:43:27 by salee2            #+#    #+#             */
+/*   Updated: 2022/11/19 20:43:28 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,12 @@ void	run_cmd(pid_t pid, t_arg *arg, char **envp)
 		return ;
 	pipe_fds = make_pipe();
 	pid = fork();
-	if (pid < 0)
-		exit_fork_error();
-	else if (pid > 0)
+	exit_if_fork_error(pid);
+	if (pid > 0)
 	{
 		redirect_r_pipe_to_stdin(pipe_fds);
-		++arg->idx;
 		free(pipe_fds);
+		++arg->idx;
 		run_cmd(pid, arg, envp);
 		wait(0);
 	}
