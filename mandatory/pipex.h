@@ -26,20 +26,12 @@ enum e_pipe_fds
 	WRITE_FD = 1,
 };
 
-enum e_bool
-{
-	FALSE,
-	TRUE
-};
-
 typedef struct s_arg
 {
 	char	**vec;
 	int		idx;
 	int		end;
 }	t_arg;
-
-typedef int	t_bool;
 
 char	*ft_get_env(const char *name, char **env);
 char	**get_file_list(const char *name, char **env, char *file_name);
