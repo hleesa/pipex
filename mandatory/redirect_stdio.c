@@ -40,7 +40,7 @@ void	redirect_stdout_to_file(char *path)
 	return ;
 }
 
-void	io_redirection(t_arg *arg)
+void	redirect_stdio(t_arg *arg)
 {
 	if (arg->idx == 2)
 		redirect_stdin_to_file(arg->vec[1]);

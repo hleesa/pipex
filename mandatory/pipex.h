@@ -46,13 +46,13 @@ char	**get_file_list(const char *name, char **env, char *file_name);
 void	exit_if_fork_error(pid_t pid);
 void	exit_if_open_error(int fd, char *path);
 void	exit_if_invalid_arg(int argc);
-int		*make_pipe(void);
+void	mkpipe(int *pipe_fds);
 void	redirect_w_pipe_to_stdout(int *pipe_fds);
 void	redirect_r_pipe_to_stdin(int *pipe_fds);
 void	redirect_stdin_to_file(char *path);
 void	redirect_stdout_to_file(char *path);
 void	run_execve(char *argv, char **envp);
 void	run_cmd(pid_t pid, t_arg *arg, char **envp);
-void	io_redirection(t_arg *arg);
+void	redirect_stdio(t_arg *arg);
 
 #endif

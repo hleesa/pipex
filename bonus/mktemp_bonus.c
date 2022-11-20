@@ -43,17 +43,16 @@ void	exec_mktemp(char **envp)
 char	*ft_mktemp(char **envp)
 {
 	pid_t	pid;
-	int		*pipe_fds;
+	int		pipe_fds[2];
 	char	buf[100];
 
-	pipe_fds = make_pipe();
+	mkpipe(pipe_fds);
 	ft_memset(buf, 0, 100);
 	pid = fork();
 	exit_if_fork_error(pid);
 	if (pid > 0)
 	{
 		redirect_r_pipe_to_stdin(pipe_fds);
-		free(pipe_fds);
 		wait(0);
 		read(STDIN_FILENO, buf, 100);
 		return (ft_strdup(buf));
@@ -61,7 +60,6 @@ char	*ft_mktemp(char **envp)
 	else
 	{
 		redirect_w_pipe_to_stdout(pipe_fds);
-		free(pipe_fds);
 		exec_mktemp(envp);
 	}
 	return (NULL);

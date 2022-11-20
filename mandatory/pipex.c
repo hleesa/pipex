@@ -12,20 +12,12 @@
 
 #include "pipex.h"
 
-int	*make_pipe(void)
+void	mkpipe(int *pipe_fds)
 {
-	int	*pipe_fds;
-
-	pipe_fds = malloc(sizeof(int) * 2);
-	if (pipe_fds == NULL)
-	{
-		perror("malloc()");
-		exit(EXIT_FAILURE);
-	}
 	if (pipe(pipe_fds) == -1)
 	{
 		perror("pipe()");
 		exit(EXIT_FAILURE);
 	}
-	return (pipe_fds);
+	return ;
 }

@@ -51,7 +51,7 @@ void	exit_if_invalid_arg(int argc);
 void	exit_if_invalid_heredoc_arg(int argc);
 void	redirect_stdin_to_heredoc(char **envp, char *eof, int stdin);
 char	*ft_mktemp(char **envp);
-int		*make_pipe(void);
+void	mkpipe(int *pipe_fds);
 void	redirect_w_pipe_to_stdout(int *pipe_fds);
 void	redirect_r_pipe_to_stdin(int *pipe_fds);
 void	redirect_stdin_to_file(char *path);

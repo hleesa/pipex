@@ -38,27 +38,24 @@ void	run_execve(char *argv, char **envp)
 
 void	run_cmd(pid_t pid, t_arg *arg, char **envp)
 {
-	int	*pipe_fds;
+	int	pipe_fds[2];
 
 	if (arg->idx + 1 == arg->end)
 		return ;
-	pipe_fds = make_pipe();
+	mkpipe(pipe_fds);
 	pid = fork();
 	exit_if_fork_error(pid);
 	if (pid > 0)
 	{
 		redirect_r_pipe_to_stdin(pipe_fds);
-		free(pipe_fds);
 		++arg->idx;
 		run_cmd(pid, arg, envp);
 		wait(0);
-		exit(EXIT_SUCCESS);
 	}
 	else
 	{
 		redirect_w_pipe_to_stdout(pipe_fds);
 		redirect_stdio(arg, envp);
-		free(pipe_fds);
 		run_execve(arg->vec[arg->idx], envp);
 	}
 	return ;
